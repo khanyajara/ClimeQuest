@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import weatherCss from "./Weather.css"
+import weatherCss from "./Weather.css";
 import weatherIconImg from "../../assess/images/weather-icon.webp";
 import humidityIconImg from "../../assess/images/humidity-icon.png";
 import windIconImg from "../../assess/images/wind-icon.png";
@@ -10,7 +10,7 @@ import weatherMistIcon from "../../assess/images/weather-mist.webp";
 import weatherRainIcon from "../../assess/images/weather-rain.webp";
 import weatherSmokeIcon from "../../assess/images/weather-smoke.png";
 import weatherSnowIcon from "../../assess/images/weather-snow.webp";
-import { getWeatherData } from "../../apiService/apiService"; 
+import { getWeatherData, getForecastData } from "../../apiService/apiService"; // Update to include forecast data
 
 const WeatherCard = ({ coordinates }) => {
   const [city, setCity] = useState("");
@@ -18,6 +18,7 @@ const WeatherCard = ({ coordinates }) => {
   const [humidity, setHumidity] = useState("");
   const [windSpeed, setWindSpeed] = useState("");
   const [weatherIcon, setWeatherIcon] = useState(weatherIconImg);
+  const [forecast, setForecast] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -58,6 +59,12 @@ const WeatherCard = ({ coordinates }) => {
           setWindSpeed(`${data.wind.speed} km/h`);
           setWeatherIcon(getIconForWeather(data.weather[0].main));
         }
+
+        // Fetch the 5-day forecast
+        const forecastData = await getForecastData(coordinates.lat, coordinates.lng);
+        if (forecastData) {
+          setForecast(forecastData.list.filter((_, index) => index % 8 === 0)); // Get one forecast for each day
+        }
       } catch (error) {
         setError("Error fetching weather data.");
         console.error("Error fetching weather data:", error);
@@ -67,7 +74,7 @@ const WeatherCard = ({ coordinates }) => {
     };
 
     fetchWeatherData();
-  }, [coordinates]); // Fetch weather when coordinates change
+  }, [coordinates]); 
 
   if (loading) {
     return <div>Loading...</div>;
@@ -79,7 +86,7 @@ const WeatherCard = ({ coordinates }) => {
 
   return (
     <div className="weather-card">
-      <div className="weather">
+      {/* <div className="weather">
         <img className="weather-icon" src={weatherIcon} alt="weather icon" />
         <h1 className="temp">{temp}</h1>
         <h2 className="city">{city}</h2>
@@ -98,6 +105,24 @@ const WeatherCard = ({ coordinates }) => {
               <p>Wind Speed</p>
             </div>
           </div>
+        </div>
+      </div> */}
+
+      <div className="forecast">
+        <h3>5-Day Forecast</h3>
+        <div className="forecast-container">
+          {forecast.map((day, index) => (
+            <div key={index} className="forecast-day">
+              <h4>{new Date(day.dt * 1000).toLocaleDateString()}</h4>
+              <img
+                className="forecast-icon"
+                src={getIconForWeather(day.weather[0].main)}
+                alt="forecast icon"
+              />
+              <p>{`${day.main.temp}°C`}</p>
+              <p>{day.weather[0].description}</p>
+            </div>
+          ))}
         </div>
       </div>
     </div>

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import Container from "react-bootstrap/Container";
-
+import css from '../App.css';
 import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
 import { CgGitFork } from "react-icons/cg";
@@ -37,7 +37,7 @@ function NavBar() {
       expanded={expand}
       fixed="top"
       expand="md"
-      className={navColour ? "sticky" : "navbar"}
+      className={navColour ? "navbar sticky-navbar" : "navbar navbar-transparent"}
     >
       <Container>
         <Navbar.Brand href="/" className="d-flex">
@@ -64,33 +64,22 @@ function NavBar() {
             <Nav.Item>
               <Nav.Link
                 as={Link}
-                to="/about"
+                to="/profile"
                 onClick={() => updateExpanded(false)}
               >
-                <AiOutlineUser style={{ marginBottom: "2px" }} /> filter 
+                <AiOutlineUser style={{ marginBottom: "2px" }} /> Profile
               </Nav.Link>
             </Nav.Item>
+
+           
 
             <Nav.Item>
               <Nav.Link
                 as={Link}
-                to="/project"
+                to="/register"
                 onClick={() => updateExpanded(false)}
               >
-                <AiOutlineFundProjectionScreen
-                  style={{ marginBottom: "2px" }}
-                />{" "}
-                Profile
-              </Nav.Link>
-            </Nav.Item>
-
-            <Nav.Item>
-              <Nav.Link
-                as={Link}
-                to="/resume"
-                onClick={() => updateExpanded(false)}
-              >
-                <CgFileDocument style={{ marginBottom: "2px" }} /> forecast
+                <CgFileDocument style={{ marginBottom: "2px" }} /> Login
               </Nav.Link>
             </Nav.Item>
 

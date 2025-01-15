@@ -1,0 +1,52 @@
+.hero-section {
+    height: 90vh;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+   
+
+    filter: blur(0);
+    
+}
+
+.hero-content{
+    width: 100%;
+    height: 80%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 0px;
+    background-image: url('../assess/images/4c1a9ce6-855f-4d63-be12-195ea94afda2_1840170.jpeg.jpg');
+    background-size: cover;
+    
+}
+.darken{
+    width: 100%;
+    height: 80%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 0px;
+    z-index: 100;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+.hero-text{
+    font-size: 64px;
+    width: 50%;
+    z-index: 1000;
+
+}
+
+.hero-title{
+    font-size: 88px;
+    color: aliceblue;
+}
+.hero-subtitle{
+    font-size: 38px;
+    color: black;
+}

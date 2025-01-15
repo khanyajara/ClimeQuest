@@ -1,0 +1,81 @@
+.Attractions-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: -90px;
+}
+
+.Container-search{
+    display: flex;
+
+}
+
+.search-Button{
+    border: none;
+    background-color: rgba(6, 218, 255, 0.459);
+    border-top-right-radius: 13px;
+    border-bottom-right-radius: 13px;
+}
+
+.search-Button:hover{
+    border: 1px solid white;
+    background-color: transparent;
+}
+
+.search-container{
+    display: flex;
+    width: 400px;
+    height: 5vh;
+    background-color: #61616185;
+    border: none;
+    border-top-left-radius: 13px;
+    border-bottom-left-radius: 13px;
+}
+.Attraction-card {
+   
+    display: flex;
+    flex-wrap: wrap;
+    
+    gap: 2rem; 
+    margin-left: -340px;
+    
+    max-width: 1800px; 
+    padding: 1rem; 
+    box-sizing: border-box;
+}
+
+
+.Attractions-Cards {
+    border: 1px solid black;
+    background-color: #fff; 
+    padding: 1rem;
+    border-radius: 13px;
+    width: 100%; 
+    margin: 1rem; 
+    box-sizing: border-box;
+}
+
+
+.Attractions-Cards:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transform: scale(1.05); 
+    transition: all 0.3s ease;
+}
+
+
+.Attractions-Cards h3 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+.Attractions-Cards p {
+    font-size: 1rem;
+    color: #333;
+}
+.Map-size{
+   width: 1900px;
+   margin-top: 400px;
+   margin-left: 800px;
+}

@@ -1,17 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import axios from 'axios';
-import Home from './Components/Home/Home'
-import UserProfile from './Components/Auth/Profile';
-import Login from './Components/Auth/Login';
-import ForgotPassword from './Components/Auth/ForgotPassword';
-import Register from './Components/Auth/Register';
-import ResetPassword from './Components/Auth/ResetPassword';
-
-
-
-
-
+import NavBar from '../Navbar';
+import './home.css';
+import Map from '../map/map';
+import WeatherCard from '../Weather/weatherCard';
+import Forecast from '../Weather/Forecast';
+import HeroSection from '../../hero-section/Hero';
+import PlacesList from '../map/Atraction'
+import CityAttractions from '../map/showCityAttraction';
 function App() {
   const [coordinates, setCoordinates] = useState({ lat: 0, lng: 0 });
   const [places, setPlaces] = useState([]);
@@ -20,13 +16,14 @@ function App() {
   const [childClicked, setChildClicked] = useState(null);
   const [weatherData, setWeatherData] = useState(null);
   const [rating, setRating] = useState(0);
+   const [attractions, setAttractions] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const ref = useRef(null);
 
   
   
 
-  // Get user's location
+ 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
       ({ coords: { latitude, longitude } }) => {
@@ -35,7 +32,7 @@ function App() {
     );
   }, []);
 
-  // Filter places based on rating
+  
   useEffect(() => {
     if (places) {
       const filtered = places.filter((place) => place.rating > rating);
@@ -43,7 +40,7 @@ function App() {
     }
   }, [rating, places]);
 
-  // Fetch weather data
+ 
   useEffect(() => {
     const fetchWeather = async () => {
       if (coordinates.lat && coordinates.lng) {
@@ -61,19 +58,33 @@ function App() {
   }, [coordinates]);
 
   return (
-    
-      <div className="App">
-      <Routes>
-          <Route path="/" element={<Home /> }/>
-          <Route path="/profile" element={<UserProfile />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/forgot-password" element={<ForgotPassword />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/reset-password" element={<ResetPassword />} />
-        </Routes>
-
+    <div className="App">
+      <NavBar />
+      <HeroSection title="Welcome to ClimeQuest" subtitle="Discover and plan your perfect trips by choosing destinations with the ideal weather conditions, ensuring an unforgettable travel experience every time.”" />
+         
+       <CityAttractions/>
+      <div className='Container-for-Map'>
+          
+          <div className="map-container">
+          
+            <PlacesList/>
+          </div>
       </div>
+
+     
+     
+
     
+
+      <div className="weather-section">
+        <div className="weather-container">
+          <WeatherCard coordinates={coordinates} />
+        </div>
+        <div>
+          <Forecast coordinates={coordinates} />
+        </div>
+      </div>
+    </div>
   );
 }
 

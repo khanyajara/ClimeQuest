@@ -1,15 +1,12 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800;900&display=swap");
 
 * {
-  padding: 0;
-  margin: 0;
+ 
   font-family: "Poppins", sans-serif;
   box-sizing: border-box;
 }
 
-body {
-  background: #111;
-}
+
 
 img {
   max-width: 100%;
@@ -17,13 +14,15 @@ img {
 
 .weather-card {
   width: 90%;
-  max-width: 450px;
+ 
   text-align: center;
   padding: 35px 30px;
   margin: 30px auto 0;
   border-radius: 20px;
   color: #fff;
-  background: linear-gradient(120deg, #ff7e5f, #feb47b);
+  border-color: darkgray;
+  background-color: #9190908e;
+  
 }
 
 .weather-card .search {
@@ -117,9 +116,49 @@ img {
   margin-top: -20px;
 }
 
-/* Media Queries for Responsive Design */
+.forecast {
+  margin: 20px;
+}
 
-/* Tablet and smaller devices */
+.forecast-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 20px; /* Adds spacing between the cards */
+}
+
+.forecast-day {
+  flex: 1 1 calc(20% - 20px); /* Makes each card smaller and responsive */
+  box-sizing: border-box;
+  padding: 10px;
+  background-color: #555555;
+  border-radius: 8px;
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+.forecast-day:hover {
+  transform: scale(1.05); /* Slight scale effect on hover */
+}
+
+.forecast-icon {
+  width: 50px; /* Smaller icon size */
+  height: 50px;
+  margin-bottom: 10px;
+}
+
+h4 {
+  margin: 0 0 10px;
+  font-size: 1rem;
+}
+
+p {
+  margin: 5px 0;
+  font-size: 0.9rem;
+}
+
+
+
 @media (max-width: 768px) {
   .weather-card {
     padding: 25px 20px;
