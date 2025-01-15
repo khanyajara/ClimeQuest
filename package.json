@@ -10,6 +10,37 @@
     "@mui/icons-material": "^6.3.1",
     "@mui/lab": "^6.0.0-beta.22",
     "@mui/material": "^6.3.1",
-    "@react-google-maps/api": "^2.20.5"
-  }
+    "@react-google-maps/api": "^2.20.5",
+    "react-scripts": "^5.0.1"
+  },
+
+"scripts": {
+  "start": "react-scripts start",
+  "client": "npm start  -prefix client",
+  "build": "react-scripts build",
+  "test": "react-scripts test",
+  "eject": "react-scripts eject"
+},
+"eslintConfig": {
+  "extends": [
+    "react-app",
+    "react-app/jest"
+  ]
+},
+"browserslist": {
+  "production": [
+    ">0.2%",
+    "not dead",
+    "not op_mini all"
+  ],
+  "development": [
+    "last 1 chrome version",
+    "last 1 firefox version",
+    "last 1 safari version"
+  ]
+},
+"devDependencies": {
+  "concurrently": "^9.1.2",
+  "nodemon": "^3.1.9"
+}
 }
