@@ -31,7 +31,7 @@ export const getPlacesData = async (type, sw, ne) => {
   }
 };
 
-const API_KEY = "47dd65ecabe0cf32fae0116841fa5da5";
+
 const WEATHER_URL = "https://api.openweathermap.org/data/2.5/weather";
 
 export const getWeatherData = async (lat, lon) => {
