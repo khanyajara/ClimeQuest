@@ -59,10 +59,10 @@ function App() {
 
   return (
     <div className="App">
-      <NavBar />
+      
       <HeroSection title="Welcome to ClimeQuest" subtitle="Discover and plan your perfect trips by choosing destinations with the ideal weather conditions, ensuring an unforgettable travel experience every time.”" />
          
-       <CityAttractions/>
+       
       <div className='Container-for-Map'>
           
           <div className="map-container">

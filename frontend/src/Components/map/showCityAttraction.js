@@ -1,33 +1,70 @@
 import React, { useState, useEffect } from "react";
-import { getPlacesData, getWeatherData, getForecastData } from '../../apiService/apiService'; // Import your functions
+import axios from "axios";
+import { getPlacesData } from '../../apiService/apiService'; // Import your functions
 
 function Attractions() {
   const [attractions, setAttractions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [location, setLocation] = useState(null);
-  const [radius, setRadius] = useState(10000); // 10 km radius by default
+  const [radius, setRadius] = useState(10000); 
 
-  // Function to get user's geolocation
   const getGeolocation = () => {
-    if (navigator.geolocation) {
+    if (!location) {
       navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const { latitude, longitude } = position.coords;
-          setLocation({ latitude, longitude });
+        async (position) => {
+            setLocation({
+                lat: position.coords.latitude,
+                lng: position.coords.longitude,
+              });
+
+          try {
+           
+            const geoResponse = await axios.get(`https://nominatim.openstreetmap.org/reverse`, {
+              params: {
+                lat: position.coords.latitude,
+                lon: position.coords.longitude,
+                format: 'json',
+                addressdetails: 1,
+              },
+            });
+            console.log('GeoResponse:', geoResponse.data); 
+
+            
+            let city = geoResponse.data.address.city || geoResponse.data.address.town || geoResponse.data.address.village;
+            if (!city) {
+              throw new Error("City not found in geolocation response");
+            }
+
+           
+            const adjustedCity = city.includes('Municipality') ? city.split(' ')[0] : city;
+            console.log('Adjusted City:', adjustedCity); 
+
+           
+            const response = await axios.get('https://climateroutebackend.onrender.com/api/search', {
+              params: { city: adjustedCity }
+            });
+            console.log('Climate API Response:', response.data); 
+
+          } catch (err) {
+            console.error("Error fetching geolocation or climate data:", err.response?.data || err.message);
+            setError("Failed to get location or attractions data.");
+            setLoading(false);
+          }
         },
         (err) => {
-          setError("Geolocation failed. Please enable location access.");
+          console.error("Geolocation error:", err);
+          setError("Failed to get geolocation.");
           setLoading(false);
         }
       );
-    } else {
-      setError("Geolocation is not supported by this browser.");
-      setLoading(false);
     }
   };
 
-  // Fetching attractions when location is available
+  useEffect(() => {
+    getGeolocation(); 
+  }, []);
+
   useEffect(() => {
     if (location) {
       const fetchAttractions = async () => {
@@ -35,19 +72,19 @@ function Attractions() {
           const lat = location.latitude;
           const lon = location.longitude;
 
-          // Define the bounding box (a simple example)
+         
           const sw = {
-            lat: lat - (radius / 111320), // Subtract from latitude (convert meters to degrees)
-            lng: lon - (radius / (40008000 / 360)) // Subtract from longitude (convert meters to degrees)
+            lat: lat - (radius / 111320), 
+            lng: lon - (radius / (40008000 / 360)) 
           };
           const ne = {
-            lat: lat + (radius / 111320), // Add to latitude
-            lng: lon + (radius / (40008000 / 360)) // Add to longitude
+            lat: lat + (radius / 111320), 
+            lng: lon + (radius / (40008000 / 360)) 
           };
 
-          // Fetch the places data from the API
+          
           const places = await getPlacesData("restaurants", sw, ne, { lat, lon }, radius);
-          setAttractions(places); // Store the fetched attractions
+          setAttractions(places); 
           setLoading(false);
         } catch (err) {
           console.error("Error fetching attractions:", err);
@@ -58,14 +95,9 @@ function Attractions() {
 
       fetchAttractions();
     }
-  }, [location, radius]); // Re-run if location or radius changes
+  }, [location, radius]); 
 
-  // Call geolocation function when the component mounts
-  useEffect(() => {
-    getGeolocation();
-  }, []);
-
-  // Loading and error handling
+ 
   if (loading) {
     return <p>Loading attractions...</p>;
   }

@@ -35,6 +35,10 @@ export const getPlacesData = async (type, sw, ne, coordinates, radius) => {
   }
 };
 
+
+
+
+
 export const getWeatherData = async (lat, lon) => {
   try {
     const { data } = await axios.get(

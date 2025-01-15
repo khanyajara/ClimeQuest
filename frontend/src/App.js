@@ -7,6 +7,7 @@ import Login from './Components/Auth/Login';
 import ForgotPassword from './Components/Auth/ForgotPassword';
 import Register from './Components/Auth/Register';
 import ResetPassword from './Components/Auth/ResetPassword';
+import NavBar from './Components/Navbar';
 
 
 
@@ -63,6 +64,7 @@ function App() {
   return (
     
       <div className="App">
+        <NavBar />
       <Routes>
           <Route path="/" element={<Home /> }/>
           <Route path="/profile" element={<UserProfile />} />
@@ -70,6 +72,7 @@ function App() {
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/register" element={<Register />} />
           <Route path="/reset-password" element={<ResetPassword />} />
+          
         </Routes>
 
       </div>
